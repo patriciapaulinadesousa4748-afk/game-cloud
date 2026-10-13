@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080b12">
+<title>Game Cloud Kd</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#080b12;
+  --panel:#111827;
+  --line:#263247;
+  --text:#f4f7ff;
+  --muted:#9ba9c0;
+  --blue:#60a5fa;
+  --green:#34d399;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font:15px system-ui,-apple-system,sans-serif;
+}
+header {
+  padding:20px 16px; border-bottom:1px solid var(--line);
+  background:#0d1320; position:sticky; top:0; z-index:3;
+}
+.brand { font-size:23px; font-weight:900; letter-spacing:-1px; }
+.brand span { color:var(--blue); }
+header p { color:var(--muted); margin:4px 0 0; font-size:12px; }
+main { width:min(900px,100%); margin:auto; padding:16px; }
+h2 { font-size:18px; margin:0 0 12px; }
+section {
+  background:var(--panel); border:1px solid var(--line);
+  border-radius:16px; padding:16px; margin-bottom:15px;
+}
+label { display:block; color:var(--muted); margin:12px 0 6px; font-size:13px; }
+select,input,button {
+  font:inherit; border-radius:10px; padding:12px;
+}
+select,input {
+  width:100%; color:var(--text); background:#0b1220;
+  border:1px solid var(--line);
+}
+button { cursor:pointer; color:var(--text); }
+.primary {
+  width:100%; margin-top:14px; border:0;
+  color:#07111e; font-weight:800;
+  background:linear-gradient(100deg,#60a5fa,#34d399);
+}
+.secondary { background:#1c2940; border:1px solid var(--line); }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.metric {
+  padding:12px; border:1px solid var(--line);
+  border-radius:12px; background:#0b1220;
+}
+.metric small { display:block; color:var(--muted); }
+.metric strong { display:block; margin-top:5px; font-size:17px; }
+.status {
+  padding:12px; border-radius:10px; background:#30240e;
+  border:1px solid #6b4d1b; color:#fcd68a; line-height:1.5;
+}
+.screen {
+  min-height:190px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  background:radial-gradient(ellipse at center,#172b49,#070a10 75%);
+  border:1px solid #263c5b; border-radius:12px; padding:20px;
+}
+.screen .symbol { font-size:42px; }
+.muted { color:var(--muted); font-size:13px; line-height:1.6; }
+.tag {
+  display:inline-block; border:1px solid var(--line);
+  padding:5px 9px; border-radius:30px; color:var(--muted);
+  font-size:11px; margin-bottom:12px;
+}
+.controls {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px; margin-top:16px;
+}
+.pad {
+  display:grid; grid-template-columns:repeat(3,48px);
+  grid-template-rows:repeat(3,48px); gap:5px;
+}
+.key {
+  padding:0; background:#1c2940; border:1px solid #405170;
+  font-weight:800; touch-action:none; user-select:none;
+}
+.key:active,.key.pressed { background:#2563eb; }
+.actions { display:flex; gap:9px; flex-wrap:wrap; }
+.actions .key { width:48px; height:48px; border-radius:50%; }
+button:focus-visible,select:focus-visible {
+  outline:2px solid var(--blue); outline-offset:3px;
+}
+footer { text-align:center; color:var(--muted); padding:12px 16px 28px; font-size:12px; }
+@media(min-width:650px) {
+  .columns { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+  .columns section { margin-bottom:0; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">GAME CLOUD <span>KD</span></div>
+  <p>Seu espaço para jogar na nuvem</p>
+</header>
+
+<main>
+  <section>
+    <span class="tag">PAINEL DO COMPUTADOR</span>
+    <h2>Monte seu PC virtual</h2>
+    <p class="muted">
+      Escolha uma configuração pretendida. As opções abaixo são
+      perfis desejados, não recursos de um servidor já disponível.
+    </p>
+
+    <label for="profile">Perfil do PC</label>
+    <select id="profile">
+      <option value="basic">Básico — 4 GB RAM / 2 vCPU</option>
+      <option value="medium" selected>Intermediário — 8 GB RAM / 4 vCPU</option>
+      <option value="gamer">Gamer — 16 GB RAM / 8 vCPU</option>
+      <option value="extreme">Alto desempenho — 32 GB RAM / 16 vCPU</option>
+    </select>
+
+    <label for="gpu">Placa de vídeo desejada</label>
+    <select id="gpu">
+      <option>GPU não definida</option>
+      <option>Gráficos integrados</option>
+      <option>GPU dedicada compatível com jogos</option>
+    </select>
+
+    <label for="resolution">Resolução de streaming desejada</label>
+    <select id="resolution">
+      <option>1280 × 720 — 30 FPS</option>
+      <option selected>1920 × 1080 — 60 FPS</option>
+      <option>1920 × 1080 — 120 FPS</option>
+    </select>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="metric">
+        <small>Memória pretendida</small>
+        <strong id="ram">8 GB</strong>
+      </div>
+      <div class="metric">
+        <small>Processamento pretendido</small>
+        <strong id="cpu">4 vCPU</strong>
+      </div>
+    </div>
+
+    <button class="primary" id="start">INICIAR CONEXÃO</button>
+    <p id="notice" class="muted" aria-live="polite">
+      Aguardando configuração. Nenhum servidor está conectado.
+    </p>
+  </section>
+
+  <div class="columns">
+    <section>
+      <h2>Seu computador</h2>
+      <div class="screen">
+        <div class="symbol">☁️</div>
+        <strong id="pcstate">PC não conectado</strong>
+        <p class="muted" id="screenmsg">
+          A tela do Windows aparecerá aqui quando o streaming real
+          for configurado.
+        </p>
+      </div>
+      <div style="margin-top:12px" class="status" id="status">
+        OFFLINE — servidor ainda não configurado.
+      </div>
+      <button class="secondary" style="width:100%;margin-top:10px"
+        id="disconnect">Desconectar</button>
+    </section>
+
+    <section>
+      <h2>Controles de jogo</h2>
+      <p class="muted" id="gamepadStatus" aria-live="polite">
+        Controle físico: aguardando detecção pelo navegador.
+      </p>
+      <p class="muted">
+        Estes botões são uma demonstração de interface. Ainda não enviam
+        comandos para um PC remoto.
+      </p>
+      <div class="controls">
+        <div class="pad" aria-label="Direcional virtual">
+          <span></span>
+          <button class="key" data-key="up" aria-label="Cima">▲</button>
+          <span></span>
+          <button class="key" data-key="left" aria-label="Esquerda">◀</button>
+          <button class="key" data-key="center" aria-label="Centro">●</button>
+          <button class="key" data-key="right" aria-label="Direita">▶</button>
+          <span></span>
+          <button class="key" data-key="down" aria-label="Baixo">▼</button>
+          <span></span>
+        </div>
+        <div class="actions" aria-label="Botões de ação">
+          <button class="key" data-key="x">X</button>
+          <button class="key" data-key="y">Y</button>
+          <button class="key" data-key="a">A</button>
+          <button class="key" data-key="b">B</button>
+        </div>
+      </div>
+      <p class="muted" id="inputStatus" aria-live="polite">
+        Entrada local: nenhum botão pressionado.
+      </p>
+    </section>
+  </div>
+
+  <section style="margin-top:15px">
+    <h2>Próximos recursos</h2>
+    <div class="grid">
+      <div class="metric"><small>Windows remoto</small><strong>A configurar</strong></div>
+      <div class="metric"><small>Streaming de vídeo</small><strong>A configurar</strong></div>
+      <div class="metric"><small>Áudio remoto</small><strong>A configurar</strong></div>
+      <div class="metric"><small>Conta de usuário</small><strong>A configurar</strong></div>
+    </div>
+  </section>
+</main>
+
+<footer>Game Cloud Kd · Protótipo inicial · Nenhum PC remoto fornecido</footer>
+
+<script>
+const profiles = {
+  basic:   { ram: "4 GB",  cpu: "2 vCPU" },
+  medium:  { ram: "8 GB",  cpu: "4 vCPU" },
+  gamer:   { ram: "16 GB", cpu: "8 vCPU" },
+  extreme: { ram: "32 GB", cpu: "16 vCPU" }
+};
+
+const profile = document.getElementById("profile");
+const notice = document.getElementById("notice");
+const status = document.getElementById("status");
+const pcstate = document.getElementById("pcstate");
+const screenmsg = document.getElementById("screenmsg");
+
+function updateProfile() {
+  const item = profiles[profile.value];
+  document.getElementById("ram").textContent = item.ram;
+  document.getElementById("cpu").textContent = item.cpu;
+}
+profile.addEventListener("change", updateProfile);
+updateProfile();
+
+document.getElementById("start").addEventListener("click", () => {
+  notice.textContent =
+    "Configuração selecionada. Não é possível iniciar o PC: " +
+    "nenhum servidor Windows foi conectado ao site.";
+  status.textContent = "OFFLINE — falta configurar o servidor.";
+  pcstate.textContent = "PC não conectado";
+  screenmsg.textContent =
+    "Quando houver um servidor e um serviço de streaming configurados, " +
+    "esta área poderá exibir a sessão remota.";
+});
+
+document.getElementById("disconnect").addEventListener("click", () => {
+  notice.textContent = "Nenhuma sessão remota ativa para desconectar.";
+  status.textContent = "OFFLINE — nenhuma sessão ativa.";
+  pcstate.textContent = "PC não conectado";
+});
+
+document.querySelectorAll("[data-key]").forEach(button => {
+  const press = event => {
+    event.preventDefault();
+    button.classList.add("pressed");
+    document.getElementById("inputStatus").textContent =
+      "Entrada local: " + button.dataset.key +
+      ". Nenhum comando foi enviado a um PC remoto.";
+  };
+  const release = () => button.classList.remove("pressed");
+
+  button.addEventListener("pointerdown", press);
+  button.addEventListener("pointerup", release);
+  button.addEventListener("pointercancel", release);
+  button.addEventListener("pointerleave", release);
+});
+
+const gamepadStatus = document.getElementById("gamepadStatus");
+
+function checkGamepads() {
+  if (!navigator.getGamepads) {
+    gamepadStatus.textContent =
+      "Este navegador não disponibiliza a Gamepad API.";
+    return;
+  }
+  const pads = Array.from(navigator.getGamepads()).filter(Boolean);
+  const connected = pads.find(pad => pad.connected);
+  gamepadStatus.textContent = connected
+    ? "Controle detectado: " + connected.id +
+      ". A leitura de comandos remotos ainda não foi configurada."
+    : "Nenhum controle detectado. Conecte um controle Bluetooth compatível " +
+      "e pressione um botão para testar.";
+}
+
+window.addEventListener("gamepadconnected", checkGamepads);
+window.addEventListener("gamepaddisconnected", checkGamepads);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) checkGamepads();
+});
+checkGamepads();
+</script>
+</body>
+      </html>
+  
